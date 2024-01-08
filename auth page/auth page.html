@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+        <form id="loginForm" action="/submit-your-form-endpoint" method="post">
+
+            <label for="username">Utilisateur:</label>
+            <input type="text" id="username" name="username" required>
+            <span class="error-message" id="usernameError"></span>
+
+
+            <label for="password">Mot de passe:</label>
+            <input type="password" id="password" name="password" required>
+            <span class="error-message" id="passwordError"></span>
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    
+    <script src="javascript.js"></script>
+</body>
+</html>
