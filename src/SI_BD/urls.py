@@ -18,9 +18,12 @@ from django.urls import path, include
 from django.views.defaults import server_error
 from .views import index
 
+app_name = 'SI_BD'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('erreur/', server_error),
     path('home/', index, name="home"),
+    path('accounts/', include("accounts.urls")),
     path('', include("inscription.urls"))
 ]

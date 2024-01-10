@@ -1,13 +1,14 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Login Page</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles2.css' %}">
 </head>
 <body>
     <div class="login-container">
         <h1>Changer Mot de passe</h1>
-        <form id="loginForm" action="/submit-your-form-endpoint" method="post">
+        <form id="loginForm" action="home/" method="post">
 
             <label for="password-old">Mot de passe actuelle:</label>
             <input type="text" id="password-old" name="password-old" required>
@@ -25,7 +26,6 @@
             <button type="submit">Changer</button>
         </form>
     </div>
-    
-    <script src="javascript.js"></script>
+    <script src="{% static 'js/javascript.js' %}"></script>
 </body>
 </html>

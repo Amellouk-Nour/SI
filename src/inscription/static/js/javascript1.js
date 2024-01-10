@@ -27,6 +27,9 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
 function showError(elementId, message) {
     document.getElementById(elementId).textContent = message;
 }
+function getCsrfToken() {
+    return document.querySelector('[name=csrfmiddlewaretoken]').value;
+}
 
 function clearErrors() {
     document.querySelectorAll('.error-message').forEach(element => {
