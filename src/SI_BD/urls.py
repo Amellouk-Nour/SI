@@ -25,5 +25,6 @@ urlpatterns = [
     path('erreur/', server_error),
     path('home/', index, name="home"),
     path('accounts/', include("accounts.urls")),
+    path('stageform/', include("stageform.urls")),
     path('', include("inscription.urls"))
 ]

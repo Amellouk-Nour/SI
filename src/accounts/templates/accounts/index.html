@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Page d'accueil</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles5.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/stylesoptions.css' %}">
 </head>
 <body>
     <div class="navbar">
@@ -18,12 +18,20 @@
 
         {% else %}
         <div class="navbar-buttons">
-            <a href="{% url 'accounts:login_user' %}" class="btn btn-green">Sign Up</a>
-            <a href="{% url 'accounts:register_user' %}" class="btn btn-black">Login</a>
+            <a href="{% url 'accounts:register_user' %}" class="btn btn-green">Sign Up</a>
+            <a href="{% url 'accounts:login_user' %}" class="btn btn-black">Login</a>
         </div>
         {% endif %}
     </div>
     <div class="welcome-message">
+        {% if user.is_authenticated %}
+        <h1>Stage</h1>
+        <p>Choisissez une option</p>
+        <div class="buttons">
+            <button id="add-internship">Ajouter un stage</button>
+            <button id="view-status">Voir le status de stage</button>
+        </div>
+        {% else %}
         <h1>Bienvenue</h1>
         <p>Vous voulez passer la sélection pour suivre notre cursus de développement de haut niveau? Alors postulez.</p>
     </div>

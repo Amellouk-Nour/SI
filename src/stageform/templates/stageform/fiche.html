@@ -1,0 +1,37 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des Fichiers</title>
+    <link rel="stylesheet" href="{% static 'css/stylesfiche.css' %}">
+</head>
+<body>
+    <div class="navbar">
+        <img src="Ensias.jpeg" alt="Logo" class="logo">
+        <div class="navbar-buttons">
+            <a href="{% url 'home' %}" class="btn btn-green">Page d'acceuil</a>
+        </div>
+    </div>
+    <h1 style="text-align: center;">Stage en cours</h1>
+    <div class="centered-container">
+        <div class="widgets-container">
+            <!-- Widget for downloading a file -->
+            <div class="widget download-widget">
+                <h2>Télécharger votre fiche</h2>
+                <a href="path_to_your_file.ext" download="filename.ext" class="button">Télécharger</a>
+            </div>
+            
+            <!-- Widget for uploading a file -->
+            <div class="widget upload-widget">
+                <h2>Téléverser votre fiche</h2>
+                <form action="your_server_endpoint" method="post" enctype="multipart/form-data">
+                    <input type="file" name="fileToUpload" id="fileToUpload">
+                    <input type="submit" value="Téléverser" name="submit" class="button">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

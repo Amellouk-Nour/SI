@@ -13,23 +13,24 @@ from django.db import models
 #     prof_tel_domicile = models.CharField(max_length=20, blank=True)  # Assuming this field can be optional
 #     prof_date_embauche = models.DateField()  # Dates should use the DateField type
 #     prof_date_depart = models.DateField(blank=True)
-#
+# #
 # class Competences(models.Model):
 #     code = models.CharField(max_length=10, primary_key=True)
 #     libelle = models.CharField(max_length=100)
 #     description = models.TextField()
-#
+# #
 # class TypeDeStages(models.Model):
 #     code_type = models.IntegerField(primary_key=True)  # Assuming that code_type is unique and can be used as a primary key.
 #     nb_semaines = models.PositiveIntegerField()
-#
-#
+# #
+# #
 # class Acquerir(models.Model):
 #     code = models.ForeignKey(Competences,on_delete=models.CASCADE, null=True)
 #     code_type = models.ForeignKey(TypeDeStages,on_delete=models.CASCADE, null=True)
 #     niv_exigence = models.IntegerField()
 #
 # class Tuteurs(models.Model):
+#     i = 0
 #     tuteur_numero = models.CharField(max_length=10, primary_key=True)
 #     tuteur_entreprise = models.CharField(max_length=20)
 #     tuteur_qualite = models.CharField(max_length=10)
@@ -37,12 +38,12 @@ from django.db import models
 #     tuteur_prenom = models.CharField(max_length=100)
 #     tuteur_telephone = models.CharField(max_length=20)
 #
-#
-#
+# #
+# #
 # class Annees(models.Model):
 #     annee = models.IntegerField(primary_key=True)
 # #
-#
+# #
 # class Entreprises(models.Model):
 #
 #     n_siret = models.CharField(max_length=14, unique=True,primary_key=True,default="")  # SIRET numbers are 14 digits long
@@ -56,7 +57,7 @@ from django.db import models
 #     fax = models.CharField(max_length=20)
 #     contact = models.CharField(max_length=100)
 #     tel_contact = models.CharField(max_length=20)
-#
+# #
 
 class inscriptions(models.Model):
     qualite = models.CharField(max_length=4)
@@ -79,7 +80,7 @@ class inscriptions(models.Model):
 #     annee = models.ForeignKey(Annees,on_delete=models.CASCADE, null=True)
 #     debut = models.DateField()
 #     fin = models.DateField()
-#
+# #
 # class Associer(models.Model):
 #     n_tuteur = models.ForeignKey(Tuteurs,on_delete=models.CASCADE,default="")
 #     n_siret = models.ForeignKey(Entreprises,on_delete=models.CASCADE,default="")
@@ -87,9 +88,11 @@ class inscriptions(models.Model):
 #     annee = models.CharField(max_length=4, primary_key=True)  # Assuming annee is a year format YYYY
 #     nb_inscrit = models.IntegerField()
 #     nb_recus = models.IntegerField()
-# #     prof_num = models.ForeignKey(Professeurs, on_delete=models.CASCADE)
+#     prof_num = models.ForeignKey(Professeurs, on_delete=models.CASCADE)
 # #
 # class Etudiants(models.Model):
+#     id = models.CharField(primary_key=True, max_length=30)
+#     etudiant_n_promo = models.CharField(max_length=20)
 #     etudiant_promo = models.CharField(max_length=10)
 #     etudiant_qualite = models.CharField(max_length=10)  # e.g., Mr, Mme, etc.
 #     etudiant_nom = models.CharField(max_length=100)
@@ -104,9 +107,6 @@ class inscriptions(models.Model):
 #     etudiant_mention = models.CharField(max_length=50, blank=True)  # Assuming this can be optional
 #     etudiant_annee = models.ForeignKey(Promos, on_delete=models.CASCADE)
 #
-#     class Meta:
-#         unique_together = ('champ1', 'champ2')
-# #
 # class Stages(models.Model):
 #     n_stage = models.CharField(max_length=10, primary_key=True,default="")
 #     compte_rendu = models.TextField(blank=True)  # Assuming this can be an optional field
@@ -116,3 +116,4 @@ class inscriptions(models.Model):
 #     siret = models.ForeignKey(Entreprises, on_delete=models.CASCADE, default="")
 #     etudiant_promo = models.ForeignKey(Etudiants, on_delete=models.CASCADE)
 #     annee = models.ForeignKey(Promos, on_delete=models.CASCADE)
+#     status = models.CharField(max_length=20)
