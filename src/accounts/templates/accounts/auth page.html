@@ -8,9 +8,7 @@
 </head>
 <body>
 
-    {% for message in messages %}
-        <h1>{{ message }}</h1>
-    {% endfor %}
+
     <div class="login-container">
         <h1>Login</h1>
         <form id="loginForm" action="" method="post">
@@ -20,7 +18,9 @@
 
             <label for="password">Mot de passe:</label>
             <input type="password" id="password" name="password" placeholder="Enter your password here" required>
-
+            {% for message in messages %}
+            <h1>{{ message }}</h1>
+            {% endfor %}
             <button type="submit">Login</button>
         </form>
     </div>

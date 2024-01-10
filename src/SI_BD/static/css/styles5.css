@@ -6,6 +6,7 @@
     background-color: black;
     color: white;
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
     padding: 10px;
@@ -13,11 +14,17 @@
 
 .logo {
     height: 50px; /* Ajustez selon la taille de votre logo */
+
+}
+.navbar-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .navbar-buttons a.btn {
     display: flex;
-    justify-content: center;
+
     border-radius: 5px;
     padding: 10px 15px;
     text-decoration: none;

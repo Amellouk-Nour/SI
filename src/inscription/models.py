@@ -41,7 +41,7 @@ from django.db import models
 #
 # class Annees(models.Model):
 #     annee = models.IntegerField(primary_key=True)
-#
+# #
 #
 # class Entreprises(models.Model):
 #
@@ -87,22 +87,26 @@ class inscriptions(models.Model):
 #     annee = models.CharField(max_length=4, primary_key=True)  # Assuming annee is a year format YYYY
 #     nb_inscrit = models.IntegerField()
 #     nb_recus = models.IntegerField()
-#     prof_num = models.ForeignKey(Professeurs, on_delete=models.CASCADE)
-#
+# #     prof_num = models.ForeignKey(Professeurs, on_delete=models.CASCADE)
+# #
 # class Etudiants(models.Model):
-#     etudiant_promo = models.CharField(max_length=10, primary_key=True)
+#     etudiant_promo = models.CharField(max_length=10)
 #     etudiant_qualite = models.CharField(max_length=10)  # e.g., Mr, Mme, etc.
 #     etudiant_nom = models.CharField(max_length=100)
 #     etudiant_prenom = models.CharField(max_length=100)
 #     etudiant_adresse = models.CharField(max_length=255)
+#     etudiant_suite = models.CharField(max_length=255, blank=True)
 #     etudiant_code_postal = models.CharField(max_length=5)  # French postal codes have 5 digits
 #     etudiant_ville = models.CharField(max_length=100)
 #     etudiant_sexe = models.CharField(max_length=1)  # M or F
 #     etudiant_naissance = models.DateField()  # Assuming a DateField for a date of birth
 #     etudiant_num_tel = models.CharField(max_length=20)
-#     etudiant_mention = models.CharField(max_length=50, blank=True,)  # Assuming this can be optional
+#     etudiant_mention = models.CharField(max_length=50, blank=True)  # Assuming this can be optional
 #     etudiant_annee = models.ForeignKey(Promos, on_delete=models.CASCADE)
 #
+#     class Meta:
+#         unique_together = ('champ1', 'champ2')
+# #
 # class Stages(models.Model):
 #     n_stage = models.CharField(max_length=10, primary_key=True,default="")
 #     compte_rendu = models.TextField(blank=True)  # Assuming this can be an optional field

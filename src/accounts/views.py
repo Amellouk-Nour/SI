@@ -8,18 +8,18 @@ from inscription.models import inscriptions
 
 
 def login_user(request):
-    if request.method == 'POST':
+
+    if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
-
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(username=username, password=password)
 
         if user is not None:
             login(request, user)
-            return redirect("home")
+            firstname = user.first_name
+            return redirect('home')
         else:
             messages.info(request, 'Identifiant ou mot de passe incorrect')
-
     form = AuthenticationForm()
     return render(request, 'accounts/auth page.html', {'form': form})
 
