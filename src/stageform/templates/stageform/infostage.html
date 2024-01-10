@@ -15,8 +15,8 @@
         </div>
     </div>
     <div class="form-container">
-        <form action="" method="post" class="internship-form">
-            {% csrf_token %}
+        <form id="stage_form_postuler" action="{% url 'stageform:stage_form_postuler' %}" method="post" class="internship-form">{% csrf_token %}
+
             <!-- Block for Type de stage -->
             <div class="form-block">
                 <h1 style="text-align: center;">Informations de stage</h1>
@@ -66,11 +66,11 @@
                     <option value="8">8</option>
                     <option value="12">12</option>
                 </select>
-                <input type="date" name="date_debut" placeholder="Date début" required>
-                <input type="date" name="date_fin" placeholder="Date fin" required>
+                    <input type="date" name="date_debut" placeholder="Date début" required>
+                    <input type="date" name="date_fin" placeholder="Date fin" required>
             </div>
 
-            <!-- Submit Button -->
+<!--             Submit Button -->
             <button type="submit">Soumettre</button>
         </form>
     </div>

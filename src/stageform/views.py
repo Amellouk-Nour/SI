@@ -47,7 +47,7 @@ from django.shortcuts import render
 
 
 # Create your views here.
-def stage_form(request):
+def stage_form_postuler(request):
     if request.method == 'POST':
         forme_juridique = request.POST.get('forme_juridique')
         raison_sociale = request.POST.get('raison_sociale')
@@ -71,6 +71,7 @@ def stage_form(request):
 
         new_tuteur = Tuteurs.objects.create(tuteur_numero=tuteur_numero, tuteur_entreprise= n_siret, tuteur_qualite = tuteur_qualite, tuteur_nom = tuteur_nom , tuteur_prenom = tuteur_prenom, tuteur_telephone = tuteur_telephone )
         new_entreprise = Entreprises.objects.create(n_siret=n_siret, forme_juridique=forme_juridique, raison_sociale=raison_sociale, entreprise_adresse=entreprise_adresse, entreprise_suite=entreprise_suite, entreprise_code_postal=entreprise_code_postal, entreprise_ville=entreprise_ville, entreprise_telephone=entreprise_telephone, entreprise_fax=entreprise_fax, entreprise_contact=entreprise_contact, entreprise_tel_contact=entreprise_tel_contact)
-    return render(request,"inscription/register page.html")
+    else:
+        print('sa marche pas')
+    return render(request,"stageform/fiche.html")
 
-new_tuteur = Tuteurs.objects.create(tuteur_numero="N9989", tuteur_entreprise= "09999099", tuteur_qualite = "M", tuteur_nom = "tuteur_nom" , tuteur_prenom = "tuteur_prenom", tuteur_telephone = "0989898989")
