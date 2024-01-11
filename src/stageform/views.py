@@ -4,6 +4,9 @@ from .models import *
 import random
 import string
 from datetime import datetime, timedelta
+from django.utils import timezone
+from django.http import request
+
 
 existing_sirets = set()
 
@@ -49,7 +52,10 @@ def createstage(request):
     return render(request, 'stageform/infostage.html')
 
 def statusstage(request):
-    return render(request, 'stageform/fiche.html')
+    user_id = request.user.id
+    etudiant_id = Etudiants.objects.get(id_user=user_id).id
+    last_stage = Stages.objects.filter(etudiant_promo_id=etudiant_id).order_by('code_type_id').last()
+    return render(request, 'stageform/fiche.html', context={"stage" : last_stage})
 
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -90,13 +96,16 @@ def stage_form_postuler(request):
 
         TypeDeStage = TypeDeStages.objects.get(code_type=internship_type)
         AnneeStage = Annees.objects.get(annee=annee)
+        print(Promos.objects.get(annee=Etudiants.objects.get(id_user=request.user.id).etudiant_promo_id).prof_num_id)
+        prof_annee= Professeurs.objects.get(prof_numero=Promos.objects.get(annee=Etudiants.objects.get(id_user=request.user.id).etudiant_promo_id).prof_num_id)
+        promo_stage= Promos.objects.get(annee=Etudiants.objects.get(id_user=request.user.id).etudiant_promo_id)
 
         # STAGE
-        # n_stage = f()
 
         new_effectuer, cree = effectuer.objects.get_or_create(code_type=TypeDeStage, annee=AnneeStage, debut=date_debut, fin=date_fin)
         new_tuteur = Tuteurs.objects.create(tuteur_numero=tuteur_numero, tuteur_entreprise= n_siret, tuteur_qualite = tuteur_qualite, tuteur_nom = tuteur_nom , tuteur_prenom = tuteur_prenom, tuteur_telephone = tuteur_telephone )
         new_entreprise = Entreprises.objects.create(n_siret=n_siret, forme_juridique=forme_juridique, raison_sociale=raison_sociale, entreprise_adresse=entreprise_adresse, entreprise_suite=entreprise_suite, entreprise_code_postal=entreprise_code_postal, entreprise_ville=entreprise_ville, entreprise_telephone=entreprise_telephone, entreprise_fax=entreprise_fax, entreprise_contact=entreprise_contact, entreprise_tel_contact=entreprise_tel_contact)
-
-    return render(request,"stageform/fiche.html")
+        new_stage = Stages.objects.create(n_stage=generate_unique_id(), compte_rendu="",
+                                          tuteur=new_tuteur, code_type=TypeDeStage, prof_num=prof_annee, siret=new_entreprise, etudiant_promo=Etudiants.objects.get(id_user=request.user.id),annee=Annees.objects.get(annee=str(timezone.now().year)), promo=promo_stage, status="En attente")
+    return render(request,"stageform/fiche.html", context={"stage" : new_stage})
 

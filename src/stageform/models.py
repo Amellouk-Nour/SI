@@ -125,11 +125,12 @@ class Etudiants(models.Model):
 
 class Stages(models.Model):
     n_stage = models.CharField(max_length=10, primary_key=True,default="")
+    promo = models.ForeignKey(Promos, on_delete=models.CASCADE, default="")
     compte_rendu = models.TextField(blank=True)  # Assuming this can be an optional field
     tuteur = models.ForeignKey(Tuteurs, on_delete=models.CASCADE)
     code_type = models.ForeignKey(TypeDeStages, on_delete=models.CASCADE)
     prof_num = models.ForeignKey(Professeurs, on_delete=models.CASCADE)
     siret = models.ForeignKey(Entreprises, on_delete=models.CASCADE, default="")
     etudiant_promo = models.ForeignKey(Etudiants, on_delete=models.CASCADE)
-    annee = models.ForeignKey(Promos, on_delete=models.CASCADE)
+    annee = models.ForeignKey(Annees, on_delete=models.CASCADE)
     status = models.CharField(max_length=20)

@@ -14,6 +14,10 @@
             <a href="{% url 'home' %}" class="btn btn-green">Page d'acceuil</a>
         </div>
     </div>
+    {% if stage.status|lower == "en attente" %}
+    <h1 style="text-align: center;">Stage en attente de validation</h1>
+    {% elif stage.status|lower == "en cours" %}
+
     <h1 style="text-align: center;">Stage en cours</h1>
     <div class="centered-container">
         <div class="widgets-container">
@@ -33,5 +37,8 @@
             </div>
         </div>
     </div>
+    {% else %}
+    <h1 style="text-align: center;">Stage termine</h1>
+    {% endif %}
 </body>
 </html>

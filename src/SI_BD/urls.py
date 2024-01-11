@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.defaults import server_error
-from .views import index
+from .views import *
 
 app_name = 'SI_BD'
 
@@ -26,5 +26,6 @@ urlpatterns = [
     path('home/', index, name="home"),
     path('accounts/', include("accounts.urls")),
     path('stageform/', include("stageform.urls")),
-    path('', include("inscription.urls"))
+    path('', include("inscription.urls")),
+    path('', red,)
 ]
