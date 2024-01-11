@@ -75,7 +75,10 @@ class inscriptions(models.Model):
 
     def __str__(self):
         return f"{self.nom} {self.prenom}"
-#
+
+    class Meta:
+        verbose_name_plural = "inscriptions"
+
 # class effectuer(models.Model):
 #     code_type = models.ForeignKey(TypeDeStages,on_delete=models.CASCADE, null=True)
 #     annee = models.ForeignKey(Annees,on_delete=models.CASCADE, null=True)

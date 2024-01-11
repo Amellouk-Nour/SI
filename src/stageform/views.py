@@ -5,7 +5,46 @@ import random
 import string
 from datetime import datetime, timedelta
 from django.utils import timezone
-from django.http import request
+import jinja2
+import pdfkit
+from django.template.loader import render_to_string
+def generate_pdf_view(request):
+    user_id = request.user.id
+    etudiant_id = Etudiants.objects.get(id_user=user_id).id
+    if Stages.objects.filter(etudiant_promo_id=etudiant_id):
+        stage = Stages.objects.filter(etudiant_promo_id=etudiant_id).order_by('code_type_id').last()
+        nom_user= Etudiants.objects.get(id_user=user_id).etudiant_nom
+        prenom_user= Etudiants.objects.get(id_user=user_id).etudiant_prenom
+        type_stage_user= stage.code_type_id
+        tuteur_user= f"{Tuteurs.objects.get(tuteur_numero=stage.tuteur_id).tuteur_nom} {Tuteurs.objects.get(tuteur_numero=stage.tuteur_id).tuteur_prenom}"
+        entreprise_user= stage.siret_id
+
+        # nom_user='frde'
+        # prenom_user='trfe'
+        # type_stage_user='trfe'
+        # tuteur_user='ytvfdd'
+        # entreprise_user='ytvfdd'
+
+        context = {
+            'nom_user': nom_user,
+            'prenom_user': prenom_user,
+            'type_stage_user': type_stage_user,
+            'tuteur_user': tuteur_user,
+            'entreprise_user': entreprise_user
+        }
+
+        output_text = render_to_string('stageform/pdfstage.html', context)
+
+
+        config = pdfkit.configuration(wkhtmltopdf="C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe")
+        pdf = pdfkit.from_string(output_text, False, configuration=config)
+
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'inline; filename="generated_pdf.pdf"'
+
+        return response
+
+
 
 
 existing_sirets = set()
@@ -52,10 +91,13 @@ def createstage(request):
     return render(request, 'stageform/infostage.html')
 
 def statusstage(request):
+
     user_id = request.user.id
     etudiant_id = Etudiants.objects.get(id_user=user_id).id
-    last_stage = Stages.objects.filter(etudiant_promo_id=etudiant_id).order_by('code_type_id').last()
-    return render(request, 'stageform/fiche.html', context={"stage" : last_stage})
+    if Stages.objects.filter(etudiant_promo_id=etudiant_id):
+        last_stage = Stages.objects.filter(etudiant_promo_id=etudiant_id).order_by('code_type_id').last()
+
+        return render(request, 'stageform/fiche.html', context={"stage" : last_stage})
 
 from django.http import HttpResponse
 from django.shortcuts import render

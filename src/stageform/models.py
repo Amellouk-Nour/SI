@@ -1,5 +1,5 @@
 from django.db import models
-#
+from datetime import datetime
 class Professeurs(models.Model):
     prof_numero = models.CharField(max_length=5, primary_key=True)  # Assuming the 'N°' field is a unique identifier for Professeur
     prof_qualite = models.CharField(max_length=10)  # M, Mme, Mlle, etc.
@@ -13,16 +13,23 @@ class Professeurs(models.Model):
     prof_tel_domicile = models.CharField(max_length=20, blank=True)  # Assuming this field can be optional
     prof_date_embauche = models.DateField()  # Dates should use the DateField type
     prof_date_depart = models.DateField(blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = "Professeurs"
     def __str__(self):
         return f"{self.prof_nom} {self.prof_prenom}"
 class Competences(models.Model):
     code = models.CharField(max_length=10, primary_key=True)
     libelle = models.CharField(max_length=100)
     description = models.TextField()
+
 # #
 class TypeDeStages(models.Model):
     code_type = models.IntegerField(primary_key=True)  # Assuming that code_type is unique and can be used as a primary key.
     nb_semaines = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"{self.code_type}"
 #
 #
 class Acquerir(models.Model):
@@ -38,6 +45,8 @@ class Tuteurs(models.Model):
     tuteur_nom = models.CharField(max_length=100)
     tuteur_prenom = models.CharField(max_length=100)
     tuteur_telephone = models.CharField(max_length=20)
+    class Meta:
+        verbose_name_plural = "Tuteurs"
 
     def __str__(self):
         return f"{self.tuteur_nom} {self.tuteur_prenom}"
@@ -64,7 +73,9 @@ class Entreprises(models.Model):
 
     def __str__(self):
         return f"{self.n_siret}"
-#
+
+    class Meta:
+        verbose_name_plural = "Entreprises"
 #
 # class inscriptions(models.Model):
 
@@ -88,8 +99,8 @@ class effectuer(models.Model):
     annee = models.ForeignKey(Annees,on_delete=models.CASCADE, null=True)
     debut = models.DateField()
     fin = models.DateField()
-
-
+     # def __str__(self):
+     #     return f"de {datetime(self.debut).strftime('%Y-%m-%d')} à "
 #
 class Associer(models.Model):
     n_tuteur = models.ForeignKey(Tuteurs,on_delete=models.CASCADE,default="")
@@ -101,6 +112,11 @@ class Promos(models.Model):
     prof_num = models.ForeignKey(Professeurs, on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.annee}"
+
+    class Meta:
+        verbose_name_plural = "Promos"
+
+
 class Etudiants(models.Model):
 
     id = models.CharField(primary_key=True, max_length=30)
@@ -122,7 +138,8 @@ class Etudiants(models.Model):
 
     def __str__(self):
         return f"{self.etudiant_nom} {self.etudiant_prenom}"
-
+    class Meta:
+        verbose_name_plural = "Etudiants"
 class Stages(models.Model):
     n_stage = models.CharField(max_length=10, primary_key=True,default="")
     promo = models.ForeignKey(Promos, on_delete=models.CASCADE, default="")
@@ -134,3 +151,8 @@ class Stages(models.Model):
     etudiant_promo = models.ForeignKey(Etudiants, on_delete=models.CASCADE)
     annee = models.ForeignKey(Annees, on_delete=models.CASCADE)
     status = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f"{self.n_stage}"
+    class Meta:
+        verbose_name_plural = "Stages"

@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="navbar">
-        <img src="{% static 'Ensias.png' %}" alt="Logo" class="logo">
+        <img src="{% static 'Ecm.jpg' %}" alt="Logo" class="logo">
         <div class="navbar-buttons">
             <a href="{% url 'home' %}" class="btn btn-green">Page d'acceuil</a>
         </div>
@@ -24,7 +24,7 @@
             <!-- Widget for downloading a file -->
             <div class="widget download-widget">
                 <h2>Télécharger votre fiche</h2>
-                <a href="path_to_your_file.ext" download="filename.ext" class="button">Télécharger</a>
+                <a href="{% url 'stageform:generate_pdf' %}" class="button">Télécharger</a>
             </div>
             
             <!-- Widget for uploading a file -->
