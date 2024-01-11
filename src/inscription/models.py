@@ -60,6 +60,7 @@ from django.db import models
 # #
 
 class inscriptions(models.Model):
+    id_user = models.CharField(max_length=100,unique=True,default="")
     qualite = models.CharField(max_length=4)
     nom = models.CharField(max_length=100)
     prenom = models.CharField(max_length=100)

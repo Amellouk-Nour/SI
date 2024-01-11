@@ -45,22 +45,22 @@ def register_user(request):
             my_user.last_name = lastname
             my_user.is_active = True
             my_user.save()
+            user = authenticate(username=username, password=password)
 
-        qualite = request.POST.get('qualite')
-        nom = request.POST.get('lastname')
-        prenom = request.POST.get('firstname')
-        address = request.POST.get('address')
-        suite = request.POST.get('suite')
-        code_postal = request.POST.get('code_postal')
-        ville = request.POST.get('ville')
-        sexe = request.POST.get('sexe')
-        date_naissance = request.POST.get('date_naissance')
-        telephone = request.POST.get('telephone')
+            qualite = request.POST.get('qualite')
+            nom = request.POST.get('lastname')
+            prenom = request.POST.get('firstname')
+            address = request.POST.get('address')
+            suite = request.POST.get('suite')
+            code_postal = request.POST.get('code_postal')
+            ville = request.POST.get('ville')
+            sexe = request.POST.get('sexe')
+            date_naissance = request.POST.get('date_naissance')
+            telephone = request.POST.get('telephone')
+            id_user = user.id
 
-        new_inscription = inscriptions(qualite=qualite, nom=nom, prenom=prenom, adress=address, suite=suite,
-                                       code_postal=code_postal, ville=ville, sexe=sexe, date_naissance=date_naissance,
-                                       telephone=telephone, admis=False)
-        new_inscription.save()
+            new_inscription = inscriptions(qualite=qualite, nom=nom, prenom=prenom, adress=address, suite=suite, code_postal=code_postal, ville=ville, sexe=sexe, date_naissance=date_naissance, telephone=telephone, admis=False, id_user = id_user)
+            new_inscription.save()
         return redirect("home")
 
     return render(request, 'accounts/register page.html')

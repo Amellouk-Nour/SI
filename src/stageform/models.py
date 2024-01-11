@@ -9,11 +9,12 @@ class Professeurs(models.Model):
     prof_suite = models.CharField(max_length=100, blank=True)  # Additional address information, optional field
     prof_code_postal = models.CharField(max_length=5)  # French postal codes have 5 digits
     prof_ville = models.CharField(max_length=100)
-    prof_tel_ecole = models.CharField(max_length=20)
+    prof_tel_ecole = models.CharField(max_length=20, blank=True)
     prof_tel_domicile = models.CharField(max_length=20, blank=True)  # Assuming this field can be optional
     prof_date_embauche = models.DateField()  # Dates should use the DateField type
-    prof_date_depart = models.DateField(blank=True)
-# #
+    prof_date_depart = models.DateField(blank=True, null=True)
+    def __str__(self):
+        return f"{self.prof_nom} {self.prof_prenom}"
 class Competences(models.Model):
     code = models.CharField(max_length=10, primary_key=True)
     libelle = models.CharField(max_length=100)
@@ -38,6 +39,9 @@ class Tuteurs(models.Model):
     tuteur_prenom = models.CharField(max_length=100)
     tuteur_telephone = models.CharField(max_length=20)
 
+    def __str__(self):
+        return f"{self.tuteur_nom} {self.tuteur_prenom}"
+
 #
 #
 class Annees(models.Model):
@@ -57,9 +61,13 @@ class Entreprises(models.Model):
     entreprise_fax = models.CharField(max_length=20)
     entreprise_contact = models.CharField(max_length=100)
     entreprise_tel_contact = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f"{self.n_siret}"
 #
 #
 # class inscriptions(models.Model):
+
 #     qualite = models.CharField(max_length=4)
 #     nom = models.CharField(max_length=100)
 #     prenom = models.CharField(max_length=100)
@@ -80,20 +88,25 @@ class effectuer(models.Model):
     annee = models.ForeignKey(Annees,on_delete=models.CASCADE, null=True)
     debut = models.DateField()
     fin = models.DateField()
+
+
 #
 class Associer(models.Model):
     n_tuteur = models.ForeignKey(Tuteurs,on_delete=models.CASCADE,default="")
     n_siret = models.ForeignKey(Entreprises,on_delete=models.CASCADE,default="")
 class Promos(models.Model):
     annee = models.CharField(max_length=4, primary_key=True)  # Assuming annee is a year format YYYY
-    nb_inscrit = models.IntegerField()
-    nb_recus = models.IntegerField()
+    nb_inscrit = models.IntegerField(blank=True, default=0)
+    nb_recus = models.IntegerField(blank=True, default=0)
     prof_num = models.ForeignKey(Professeurs, on_delete=models.CASCADE)
-
+    def __str__(self):
+        return f"{self.annee}"
 class Etudiants(models.Model):
+
     id = models.CharField(primary_key=True, max_length=30)
-    etudiant_n_promo = models.CharField(max_length=20)
-    etudiant_promo = models.CharField(max_length=10)
+    id_user = models.CharField(max_length=100,unique=True,default="")
+    etudiant_n_promo = models.CharField(max_length=20) # id_inscription
+    etudiant_promo = models.ForeignKey(Promos, on_delete=models.CASCADE) # promo
     etudiant_qualite = models.CharField(max_length=10)  # e.g., Mr, Mme, etc.
     etudiant_nom = models.CharField(max_length=100)
     etudiant_prenom = models.CharField(max_length=100)
@@ -105,7 +118,10 @@ class Etudiants(models.Model):
     etudiant_naissance = models.DateField()  # Assuming a DateField for a date of birth
     etudiant_num_tel = models.CharField(max_length=20)
     etudiant_mention = models.CharField(max_length=50, blank=True)  # Assuming this can be optional
-    etudiant_annee = models.ForeignKey(Promos, on_delete=models.CASCADE)
+
+
+    def __str__(self):
+        return f"{self.etudiant_nom} {self.etudiant_prenom}"
 
 class Stages(models.Model):
     n_stage = models.CharField(max_length=10, primary_key=True,default="")
