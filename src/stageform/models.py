@@ -55,7 +55,9 @@ class Tuteurs(models.Model):
 #
 class Annees(models.Model):
     annee = models.IntegerField(primary_key=True)
-#
+    def __str__(self):
+        return f"{self.annee}"
+
 #
 class Entreprises(models.Model):
 
@@ -133,7 +135,8 @@ class Etudiants(models.Model):
     etudiant_sexe = models.CharField(max_length=1)  # M or F
     etudiant_naissance = models.DateField()  # Assuming a DateField for a date of birth
     etudiant_num_tel = models.CharField(max_length=20)
-    etudiant_mention = models.CharField(max_length=50, blank=True)  # Assuming this can be optional
+    etudiant_mention = models.CharField(max_length=50, blank=True)
+
 
 
     def __str__(self):
@@ -151,8 +154,9 @@ class Stages(models.Model):
     etudiant_promo = models.ForeignKey(Etudiants, on_delete=models.CASCADE)
     annee = models.ForeignKey(Annees, on_delete=models.CASCADE)
     status = models.CharField(max_length=20)
+    fiche_évaluation = models.FileField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.n_stage}"
+        return f"{self.etudiant_promo } {self.code_type}"
     class Meta:
         verbose_name_plural = "Stages"

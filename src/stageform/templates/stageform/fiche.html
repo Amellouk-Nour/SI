@@ -30,7 +30,8 @@
             <!-- Widget for uploading a file -->
             <div class="widget upload-widget">
                 <h2>Téléverser votre fiche</h2>
-                <form action="your_server_endpoint" method="post" enctype="multipart/form-data">
+                <form action="{% url 'stageform:upload_file' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
                     <input type="file" name="fileToUpload" id="fileToUpload">
                     <input type="submit" value="Téléverser" name="submit" class="button">
                 </form>

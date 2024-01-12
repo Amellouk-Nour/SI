@@ -5,9 +5,10 @@ import random
 import string
 from datetime import datetime, timedelta
 from django.utils import timezone
-import jinja2
 import pdfkit
 from django.template.loader import render_to_string
+import os
+from .forms import UploadFileForm
 def generate_pdf_view(request):
     user_id = request.user.id
     etudiant_id = Etudiants.objects.get(id_user=user_id).id
@@ -151,3 +152,39 @@ def stage_form_postuler(request):
                                           tuteur=new_tuteur, code_type=TypeDeStage, prof_num=prof_annee, siret=new_entreprise, etudiant_promo=Etudiants.objects.get(id_user=request.user.id),annee=Annees.objects.get(annee=str(timezone.now().year)), promo=promo_stage, status="En attente")
     return render(request,"stageform/fiche.html", context={"stage" : new_stage})
 
+
+
+def upload(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            file = request.FILES['fileToUpload']
+
+            if not file.name.endswith('.pdf'):
+                return HttpResponse("Erreur : Le fichier n'est pas un PDF")
+
+            custom_upload_dir = 'C:/$Winkernel/formation python/SI_BD/src/stageform/media/uploads'  # Base directory for uploads
+            save_path = os.path.join(custom_upload_dir, file.name)
+
+            # Ensure directory exists
+            os.makedirs(os.path.dirname(save_path), exist_ok=True)
+
+            # Save the uploaded file
+            with open(save_path, 'wb+') as destination:
+                for chunk in file.chunks():
+                    destination.write(chunk)
+
+            # Update the stage with the file path
+            user_id = request.user.id
+            etudiant_id = Etudiants.objects.get(id_user=user_id).id
+            stage = Stages.objects.filter(etudiant_promo_id=etudiant_id).order_by('code_type_id').last()
+            print(type(file))
+            stage.fiche_évaluation = os.path.join('uploads', file.name)
+            stage.save()
+
+            return HttpResponse("Sauvegarde du fichier réussie")
+        else:
+            return HttpResponse("Erreur dans le formulaire")
+    else:
+        form = UploadFileForm()
+        return render(request, "stageform/fiche.html", {'form': form})
